@@ -1,0 +1,185 @@
+/* FounderOS — base stylesheet (checkpoint 1: functional dark shell)
+ * Visual identity (accent, type rhythm, one-pager styling) expands in later checkpoints. */
+
+:root {
+  --bg: #0c0d12;
+  --surface: #171922;
+  --surface-2: #1f2230;
+  --line: rgba(255, 255, 255, 0.09);
+  --text: #e7e9f0;
+  --muted: #9aa0b2;
+  --accent: #6a7bff; /* placeholder accent — refined in checkpoint 2 */
+  --radius: 10px;
+  --taskbar-h: 56px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: "SF Mono", ui-monospace, "JetBrains Mono", Menlo, Consolas, monospace;
+}
+
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body {
+  font-family: var(--font);
+  color: var(--text);
+  background: var(--bg);
+  overflow: hidden;
+  user-select: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ---------- boot ---------- */
+.boot {
+  position: fixed; inset: 0; z-index: 1000;
+  display: grid; place-items: center;
+  background: var(--bg);
+  transition: opacity .5s ease;
+}
+.boot--done { opacity: 0; pointer-events: none; }
+.boot__inner { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.boot__logo { font-size: 34px; font-weight: 700; letter-spacing: -0.5px; }
+.boot__logo span { color: var(--accent); }
+.boot__bar { width: 220px; height: 4px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+.boot__fill { height: 100%; width: 0; background: var(--accent); animation: boot-fill 1.4s ease forwards; }
+@keyframes boot-fill { to { width: 100%; } }
+.boot__status { color: var(--muted); font-size: 13px; letter-spacing: 0.5px; }
+
+/* ---------- desktop ---------- */
+.desktop { position: fixed; inset: 0; bottom: var(--taskbar-h); }
+.desktop__wallpaper {
+  position: absolute; inset: 0;
+  background:
+    radial-gradient(900px 600px at 78% 15%, rgba(106,123,255,0.16), transparent 60%),
+    radial-gradient(700px 500px at 12% 88%, rgba(106,123,255,0.08), transparent 60%),
+    var(--bg);
+}
+
+/* ---------- desktop icons ---------- */
+.icons {
+  position: absolute; top: 24px; left: 20px;
+  display: flex; flex-direction: column; gap: 6px;
+}
+.icon {
+  display: flex; flex-direction: column; align-items: center; gap: 6px;
+  width: 88px; padding: 10px 6px; border: 0; background: transparent;
+  color: var(--text); cursor: pointer; border-radius: 10px;
+  font-family: inherit;
+}
+.icon:hover, .icon:focus-visible { background: rgba(255,255,255,0.05); outline: none; }
+.icon__tile {
+  width: 52px; height: 52px; border-radius: 14px;
+  display: grid; place-items: center;
+  background: linear-gradient(160deg, var(--surface-2), var(--surface));
+  border: 1px solid var(--line);
+}
+.icon__badge { font-weight: 700; font-size: 15px; color: var(--accent); letter-spacing: 0.5px; }
+.icon__label { font-size: 12px; color: var(--text); }
+
+/* ---------- windows ---------- */
+.windows { position: absolute; inset: 0; pointer-events: none; }
+.window {
+  position: absolute; pointer-events: auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.55);
+  display: flex; flex-direction: column;
+  overflow: hidden;
+  min-width: 300px; min-height: 180px;
+}
+.window.is-active { box-shadow: 0 20px 60px rgba(0,0,0,0.7); border-color: rgba(255,255,255,0.16); }
+.window.is-minimized { display: none; }
+.window--enter { animation: win-in .18s ease; }
+.window--exit { animation: win-out .15s ease forwards; }
+@keyframes win-in { from { opacity: 0; transform: translateY(8px) scale(.98); } }
+@keyframes win-out { to { opacity: 0; transform: scale(.97); } }
+
+.window__bar {
+  height: 40px; flex: 0 0 40px;
+  display: flex; align-items: center; gap: 10px;
+  padding: 0 12px;
+  background: var(--surface-2);
+  border-bottom: 1px solid var(--line);
+  cursor: grab;
+}
+.window.is-dragging .window__bar { cursor: grabbing; }
+.window__lights { display: flex; gap: 8px; }
+.light { width: 13px; height: 13px; border-radius: 50%; border: 0; cursor: pointer; padding: 0; }
+.light--close { background: #ff5f57; }
+.light--min { background: #febc2e; }
+.light--max { background: #28c840; }
+.window__title { font-size: 13px; color: var(--muted); display: flex; align-items: center; gap: 8px; }
+.window__badge { font-size: 11px; font-weight: 700; color: var(--accent); }
+.window__bar-spacer { flex: 1; }
+.window__body { flex: 1; overflow: auto; background: var(--surface); }
+
+.pane { padding: 24px; }
+.pane h1 { margin: 0 0 10px; font-size: 22px; }
+.pane p { margin: 0 0 8px; color: var(--text); line-height: 1.5; }
+.pane .muted { color: var(--muted); font-size: 13px; }
+
+/* resize handles */
+.rz { position: absolute; z-index: 5; }
+.rz--n { top: -3px; left: 8px; right: 8px; height: 6px; cursor: ns-resize; }
+.rz--s { bottom: -3px; left: 8px; right: 8px; height: 6px; cursor: ns-resize; }
+.rz--e { right: -3px; top: 8px; bottom: 8px; width: 6px; cursor: ew-resize; }
+.rz--w { left: -3px; top: 8px; bottom: 8px; width: 6px; cursor: ew-resize; }
+.rz--ne { right: -4px; top: -4px; width: 12px; height: 12px; cursor: nesw-resize; }
+.rz--nw { left: -4px; top: -4px; width: 12px; height: 12px; cursor: nwse-resize; }
+.rz--se { right: -4px; bottom: -4px; width: 12px; height: 12px; cursor: nwse-resize; }
+.rz--sw { left: -4px; bottom: -4px; width: 12px; height: 12px; cursor: nesw-resize; }
+
+/* ---------- taskbar ---------- */
+.taskbar {
+  position: fixed; left: 0; right: 0; bottom: 0; height: var(--taskbar-h);
+  display: flex; align-items: center; gap: 10px; padding: 0 12px;
+  background: rgba(18,20,28,0.92);
+  border-top: 1px solid var(--line);
+  backdrop-filter: blur(12px);
+  z-index: 900;
+}
+.taskbar__start {
+  display: flex; align-items: center; gap: 8px;
+  height: 36px; padding: 0 14px; border-radius: 8px;
+  background: var(--surface-2); color: var(--text); border: 1px solid var(--line);
+  font-family: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+}
+.taskbar__start:hover, .taskbar__start.is-open { border-color: var(--accent); }
+.taskbar__glyph { width: 12px; height: 12px; border-radius: 3px; background: var(--accent); display: inline-block; }
+.taskbar__tasks { display: flex; gap: 8px; flex: 1; overflow-x: auto; }
+.task {
+  display: flex; align-items: center; gap: 7px;
+  height: 36px; padding: 0 12px; max-width: 200px;
+  border-radius: 8px; border: 1px solid transparent;
+  background: rgba(255,255,255,0.04); color: var(--text);
+  font-family: inherit; font-size: 12px; cursor: pointer; white-space: nowrap;
+}
+.task:hover { background: rgba(255,255,255,0.08); }
+.task.is-active { border-color: var(--accent); background: rgba(106,123,255,0.14); }
+.task.is-min { opacity: 0.55; }
+.task__dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+.task__badge { font-weight: 700; font-size: 11px; color: var(--accent); }
+.task__label { overflow: hidden; text-overflow: ellipsis; }
+.taskbar__tray { display: flex; align-items: center; gap: 12px; padding-left: 8px; }
+.taskbar__clock { font-size: 13px; color: var(--text); font-variant-numeric: tabular-nums; min-width: 64px; text-align: right; }
+
+/* ---------- start menu ---------- */
+.startmenu {
+  position: fixed; left: 12px; bottom: calc(var(--taskbar-h) + 8px);
+  width: 320px; padding: 14px; z-index: 950;
+  background: rgba(23,25,34,0.98); border: 1px solid var(--line);
+  border-radius: 14px; box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+.startmenu__head { display: flex; align-items: center; gap: 12px; padding: 6px 6px 14px; border-bottom: 1px solid var(--line); margin-bottom: 10px; }
+.startmenu__avatar { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: #fff; font-weight: 700; }
+.startmenu__name { font-weight: 600; }
+.startmenu__role { font-size: 12px; color: var(--muted); }
+.startmenu__apps { display: flex; flex-direction: column; gap: 4px; }
+.startapp {
+  display: flex; align-items: center; gap: 12px; text-align: left;
+  padding: 8px 10px; border-radius: 8px; border: 0; background: transparent;
+  color: var(--text); cursor: pointer; font-family: inherit;
+}
+.startapp:hover { background: rgba(255,255,255,0.06); }
+.startapp__badge { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; background: var(--surface-2); border: 1px solid var(--line); color: var(--accent); font-weight: 700; font-size: 13px; }
+.startapp__meta { display: flex; flex-direction: column; }
+.startapp__meta b { font-size: 13px; }
+.startapp__meta small { font-size: 11px; color: var(--muted); }

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>FounderOS</title>
+  <meta name="description" content="FounderOS — a personal WebOS desktop where the apps are the projects I'm building." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="stylesheet" href="css/base.css" />
+</head>
+<body>
+  <!-- Boot screen -->
+  <div id="boot" class="boot">
+    <div class="boot__inner">
+      <div class="boot__logo">Founder<span>OS</span></div>
+      <div class="boot__bar"><div class="boot__fill"></div></div>
+      <div class="boot__status">booting…</div>
+    </div>
+  </div>
+
+  <!-- Desktop -->
+  <main id="desktop" class="desktop" aria-label="FounderOS desktop">
+    <div class="desktop__wallpaper"></div>
+    <div id="icons" class="icons" role="list"></div>
+    <div id="windows" class="windows"></div>
+  </main>
+
+  <!-- Start menu -->
+  <div id="startmenu" class="startmenu" hidden>
+    <div class="startmenu__head">
+      <div class="startmenu__avatar">AP</div>
+      <div>
+        <div class="startmenu__name">Akshith Paluru</div>
+        <div class="startmenu__role">founder · builder</div>
+      </div>
+    </div>
+    <div id="startmenu-apps" class="startmenu__apps"></div>
+  </div>
+
+  <!-- Taskbar / dock -->
+  <footer id="taskbar" class="taskbar">
+    <button id="start" class="taskbar__start" aria-label="Open launcher">
+      <span class="taskbar__glyph"></span> Launch
+    </button>
+    <div id="tasks" class="taskbar__tasks"></div>
+    <div class="taskbar__tray">
+      <span id="clock" class="taskbar__clock">--:--</span>
+    </div>
+  </footer>
+
+  <script src="js/wm.js"></script>
+  <script src="js/apps.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
