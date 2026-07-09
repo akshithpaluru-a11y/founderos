@@ -4,7 +4,8 @@
 
 Built for Hack Club **Stardance — "WebOS 1"**.
 
-> **Live demo:** _added after deploy_ · **Source:** _added after deploy_
+> ### ▶︎ [**Live demo — akshithpaluru-a11y.github.io/founderos**](https://akshithpaluru-a11y.github.io/founderos/)
+> **Source:** [github.com/akshithpaluru-a11y/founderos](https://github.com/akshithpaluru-a11y/founderos) · fully public, no login
 
 ---
 
