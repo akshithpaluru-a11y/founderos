@@ -151,12 +151,25 @@
       ],
       tagline_short: "Reusable dishware lending",
     },
+    {
+      id: "terminal",
+      name: "Terminal",
+      badge: ">_",
+      color: "#ff7a45",
+      colorSoft: "rgba(255,122,69,0.16)",
+      category: "System",
+      tagline: "foundersh — a real command line for FounderOS.",
+      tagline_short: "foundersh — the real CLI",
+      status: "System",
+      width: 640, height: 440,
+      custom: true,
+      render(body) { window.FounderTerminal.mount(body); },
+    },
   ];
 
   const byId = {};
   APPS.forEach((a) => {
-    a.tagline = a.tagline; // keep full tagline for one-pager
-    a.render = (body) => { body.innerHTML = onePager(a); };
+    if (!a.custom) a.render = (body) => { body.innerHTML = onePager(a); };
     byId[a.id] = a;
   });
 
