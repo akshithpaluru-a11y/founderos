@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
   <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/os.css" />
+  <script src="js/os.js"></script>
 </head>
 <body>
   <!-- Boot screen -->
@@ -20,6 +22,27 @@
       <div class="boot__status">loading workspace…</div>
       <div class="boot__by">the desktop where the apps are the things I'm building</div>
     </div>
+  </div>
+
+  <!-- Lock screen (no password — press Enter / click to enter) -->
+  <div id="lock" class="lock" hidden>
+    <div class="lock__wallpaper"></div>
+    <div class="lock__scrim"></div>
+    <div class="lock__clock">
+      <div id="lock-time" class="lock__time">--:--</div>
+      <div id="lock-date" class="lock__date">—</div>
+    </div>
+    <div class="lock__user">
+      <div class="lock__avatar">AP</div>
+      <div class="lock__name">Akshith Paluru</div>
+      <div class="lock__role">founder · builder</div>
+      <form id="lock-form" class="lock__form" autocomplete="off">
+        <input id="lock-input" class="lock__input" type="text" placeholder="Press Enter to open FounderOS" aria-label="Unlock FounderOS" />
+        <button type="submit" class="lock__go" aria-label="Enter">→</button>
+      </form>
+      <div class="lock__hint">No password — FounderOS is fully public. Just hit Enter.</div>
+    </div>
+    <div class="lock__foot">FounderOS 1.0</div>
   </div>
 
   <!-- Desktop -->
@@ -49,13 +72,39 @@
     </button>
     <div id="tasks" class="taskbar__tasks"></div>
     <div class="taskbar__tray">
+      <button id="palette-btn" class="taskbar__k" aria-label="Open command palette">
+        <span>Search</span><kbd>⌘K</kbd>
+      </button>
       <span id="clock" class="taskbar__clock">--:--</span>
     </div>
   </footer>
 
+  <!-- Snap preview overlay -->
+  <div id="snap" class="snap" hidden></div>
+
+  <!-- Command palette (Cmd/Ctrl+K) -->
+  <div id="palette" class="palette" hidden>
+    <div class="palette__panel" role="dialog" aria-label="Command palette">
+      <div class="palette__searchrow">
+        <span class="palette__icon">⌘</span>
+        <input id="palette-input" class="palette__input" placeholder="Search apps and commands…" aria-label="Search" />
+        <span class="palette__esc">esc</span>
+      </div>
+      <div id="palette-list" class="palette__list"></div>
+    </div>
+  </div>
+
+  <!-- Desktop context menu -->
+  <div id="ctxmenu" class="ctxmenu" hidden></div>
+
   <script src="js/wm.js"></script>
   <script src="js/terminal.js"></script>
+  <script src="js/dashboard.js"></script>
+  <script src="js/notes.js"></script>
+  <script src="js/settings.js"></script>
   <script src="js/apps.js"></script>
+  <script src="js/lock.js"></script>
+  <script src="js/palette.js"></script>
   <script src="js/main.js"></script>
 </body>
 </html>

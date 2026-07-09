@@ -16,6 +16,7 @@
   --accent: #ff7a45;
   --accent-2: #ff9a63;
   --accent-soft: rgba(255, 122, 69, 0.16);
+  --accent-rgb: 255, 122, 69;
   /* per-app color (each window/app overrides --app); falls back to system accent */
   --app: var(--accent);
   --app-soft: var(--accent-soft);
@@ -66,11 +67,13 @@ body {
 .desktop { position: fixed; inset: 0; bottom: var(--taskbar-h); }
 .desktop__wallpaper {
   position: absolute; inset: 0;
+  --wp-accent: rgba(var(--accent-rgb, 255,122,69), 0.14);
   background:
-    radial-gradient(1100px 700px at 82% 8%, rgba(255,122,69,0.14), transparent 58%),
+    radial-gradient(1100px 700px at 82% 8%, var(--wp-accent), transparent 58%),
     radial-gradient(760px 620px at 8% 92%, rgba(56,189,248,0.08), transparent 60%),
     radial-gradient(600px 500px at 50% 50%, rgba(167,139,250,0.05), transparent 70%),
     linear-gradient(180deg, var(--bg-2), var(--bg));
+  transition: background .5s ease;
 }
 .desktop__wallpaper::after {
   /* faint grid texture — founder's build surface */
@@ -81,6 +84,36 @@ body {
   background-size: 46px 46px;
   mask-image: radial-gradient(circle at 50% 40%, #000 30%, transparent 85%);
 }
+/* wallpaper variants (recolor with the active accent) */
+[data-wallpaper="aurora"] .desktop__wallpaper {
+  background:
+    radial-gradient(900px 700px at 15% 10%, rgba(var(--accent-rgb,255,122,69),0.20), transparent 55%),
+    radial-gradient(900px 700px at 85% 90%, rgba(56,189,248,0.16), transparent 55%),
+    radial-gradient(700px 600px at 60% 40%, rgba(167,139,250,0.12), transparent 60%),
+    linear-gradient(160deg, #0a0c14, #090a0e 60%);
+}
+[data-wallpaper="aurora"] .desktop__wallpaper::after { opacity: 0.15; }
+[data-wallpaper="carbon"] .desktop__wallpaper {
+  background:
+    radial-gradient(1200px 800px at 50% -10%, rgba(var(--accent-rgb,255,122,69),0.08), transparent 60%),
+    linear-gradient(180deg, #0b0c10, #08090c);
+}
+[data-wallpaper="carbon"] .desktop__wallpaper::after {
+  opacity: 0.5;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 30px 30px;
+  mask-image: none;
+}
+[data-wallpaper="nebula"] .desktop__wallpaper {
+  background:
+    radial-gradient(700px 700px at 25% 25%, rgba(var(--accent-rgb,255,122,69),0.22), transparent 50%),
+    radial-gradient(800px 800px at 78% 62%, rgba(139,124,246,0.18), transparent 55%),
+    radial-gradient(600px 600px at 55% 88%, rgba(52,211,153,0.10), transparent 55%),
+    linear-gradient(200deg, #0c0a14, #08080d);
+}
+[data-wallpaper="nebula"] .desktop__wallpaper::after { opacity: 0.1; }
 .desktop__brand {
   position: absolute; right: 26px; bottom: 20px;
   font-size: 12px; letter-spacing: 2px; text-transform: uppercase;

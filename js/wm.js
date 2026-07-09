@@ -56,9 +56,35 @@
     }
   }
 
+  // ---- snap preview ----
+  function snapRect(zone) {
+    const W = window.innerWidth, H = window.innerHeight - TASKBAR_H;
+    if (zone === "left") return { x: 0, y: 0, w: Math.round(W / 2), h: H };
+    if (zone === "right") return { x: Math.round(W / 2), y: 0, w: Math.round(W / 2), h: H };
+    if (zone === "max") return { x: 0, y: 0, w: W, h: H };
+    return null;
+  }
+  function showSnap(zone) {
+    const el = document.getElementById("snap");
+    const r = snapRect(zone);
+    if (!r) { el.hidden = true; return; }
+    el.style.left = r.x + "px"; el.style.top = r.y + "px";
+    el.style.width = r.w + "px"; el.style.height = r.h + "px";
+    el.hidden = false;
+  }
+  function hideSnap() { document.getElementById("snap").hidden = true; }
+
   // ---- drag ----
   function startDrag(rec, ev) {
-    if (rec.maximized) return;
+    if (rec.maximized) {
+      // dragging a maximized window restores it under the cursor
+      rec.maximized = false;
+      rec.el.classList.remove("is-maximized");
+      rec.w = Math.min(rec.w, Math.round(window.innerWidth * 0.6));
+      rec.x = Math.max(0, ev.clientX - rec.w / 2);
+      rec.y = 0;
+      applyGeom(rec);
+    }
     ev.preventDefault();
     bringToFront(rec.id);
     const el = rec.el;
@@ -67,20 +93,36 @@
     const offY = ev.clientY - rec.y;
     const pid = ev.pointerId;
     el.classList.add("is-dragging");
+    let zone = null;
+    const EDGE = 24;
 
     function move(e) {
       rec.x = e.clientX - offX;
       rec.y = Math.max(0, e.clientY - offY);
       el.style.left = rec.x + "px";
       el.style.top = rec.y + "px";
+      // detect snap zones by cursor position
+      let z = null;
+      if (e.clientY <= 6) z = "max";
+      else if (e.clientX <= EDGE) z = "left";
+      else if (e.clientX >= window.innerWidth - EDGE) z = "right";
+      if (z !== zone) { zone = z; z ? showSnap(z) : hideSnap(); }
     }
     function up() {
       window.removeEventListener("pointermove", move);
       window.removeEventListener("pointerup", up);
       el.style.transition = "";
       el.classList.remove("is-dragging");
-      clampIntoView(rec);
-      applyGeom(rec);
+      hideSnap();
+      if (zone) {
+        const r = snapRect(zone);
+        if (zone === "max") { rec.maximized = true; el.classList.add("is-maximized"); }
+        else { rec.x = r.x; rec.y = r.y; rec.w = r.w; rec.h = r.h; }
+        applyGeom(rec);
+      } else {
+        clampIntoView(rec);
+        applyGeom(rec);
+      }
     }
     window.addEventListener("pointermove", move);
     window.addEventListener("pointerup", up);
