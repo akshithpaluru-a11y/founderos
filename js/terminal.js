@@ -19,6 +19,10 @@
     shieldeye: "shieldeye", shield: "shieldeye", se: "shieldeye",
     sitesmith: "sitesmith", "sitesmith-pm": "sitesmith", sitesmithpm: "sitesmith", site: "sitesmith", ss: "sitesmith",
     ecosewa: "ecosewa", eco: "ecosewa", es: "ecosewa",
+    traction: "traction", dashboard: "traction", metrics: "traction",
+    notes: "notes", ideapad: "notes", pad: "notes",
+    settings: "settings", appearance: "settings", theme: "settings",
+    about: "about", me: "about", profile: "about",
   };
 
   function esc(s) {
@@ -64,6 +68,7 @@
           ["ls", "list installed apps"],
           ["date", "current date and time"],
           ["neofetch", "FounderOS system info"],
+          ["theme &lt;name&gt;", "recolor the OS (e.g. theme flux)"],
           ["stack", "what this OS is built with"],
           ["hustle", "a founder mantra, at random"],
           ["contact", "where to find me"],
@@ -140,6 +145,20 @@
       hustle() {
         const m = MANTRAS[Math.floor(Math.random() * MANTRAS.length)];
         print(`<span class="a">“${esc(m)}”</span>`, "accent");
+      },
+      theme(arg) {
+        const OS = window.FounderOS;
+        if (!OS) { print("theme: settings unavailable", "error"); return; }
+        if (!arg) {
+          print(`current accent: <span class="a">${OS.accentName()}</span>`, "accent");
+          print(`options: ${OS.accents.map((a) => `<span class="cmd">${a.id}</span>`).join("  ")}`);
+          print(`<span class="dim">usage: theme flux</span>`, "dim");
+          return;
+        }
+        const match = OS.accents.find((a) => a.id === arg.toLowerCase());
+        if (!match) { print(`theme: no accent "${esc(arg)}" — run <span class="cmd">theme</span> for options`, "error"); return; }
+        OS.setAccent(match.id);
+        print(`accent set to <span class="a">${match.name}</span>. ✨`, "accent");
       },
       contact() {
         printLines("github   github.com/akshithpaluru-a11y");

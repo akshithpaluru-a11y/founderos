@@ -165,6 +165,94 @@
       custom: true,
       render(body) { window.FounderTerminal.mount(body); },
     },
+    {
+      id: "traction",
+      name: "Traction",
+      badge: "▤",
+      color: "#f5a524",
+      colorSoft: "rgba(245,165,36,0.15)",
+      category: "Dashboard",
+      tagline: "A founder's-eye view of the build.",
+      tagline_short: "animated build metrics",
+      status: "Live",
+      width: 640, height: 620,
+      custom: true,
+      render(body, rec) { window.FounderDashboard.mount(body, rec); },
+    },
+    {
+      id: "notes",
+      name: "Idea Pad",
+      badge: "✎",
+      color: "#fcd34d",
+      colorSoft: "rgba(252,211,77,0.14)",
+      category: "Utility",
+      tagline: "Quick-capture notes that autosave.",
+      tagline_short: "autosaving scratchpad",
+      status: "Utility",
+      width: 520, height: 460,
+      custom: true, desktop: false,
+      render(body) { window.FounderNotes.mount(body); },
+    },
+    {
+      id: "settings",
+      name: "Settings",
+      badge: "◐",
+      color: "#94a3b8",
+      colorSoft: "rgba(148,163,184,0.16)",
+      category: "System",
+      tagline: "Recolor the OS and swap the wallpaper.",
+      tagline_short: "accent + wallpaper",
+      status: "System",
+      width: 560, height: 560,
+      custom: true, desktop: false,
+      render(body) { window.FounderSettings.mount(body); },
+    },
+    {
+      id: "about",
+      name: "About Me",
+      badge: "AP",
+      color: "#ff7a45",
+      colorSoft: "rgba(255,122,69,0.16)",
+      category: "Profile",
+      tagline: "Who's behind FounderOS.",
+      tagline_short: "the founder behind it",
+      status: "Profile",
+      width: 560, height: 560,
+      custom: true, desktop: false,
+      render(body) {
+        body.innerHTML = `
+          <div class="about">
+            <div class="about__hero">
+              <div class="about__avatar">AP</div>
+              <div>
+                <h1>Akshith Paluru</h1>
+                <p class="about__role">founder &amp; builder</p>
+              </div>
+            </div>
+            <p class="about__bio">
+              I'd rather ship four scrappy products than pitch one perfect deck. FounderOS is
+              my desktop — and instead of generic apps, the icons are the things I'm actually
+              building right now.
+            </p>
+            <h2 class="about__h2">What I'm building</h2>
+            <ul class="about__vents">
+              <li style="--c:#38bdf8"><b>DripLyft</b> autonomous drone window cleaning</li>
+              <li style="--c:#a78bfa"><b>ShieldEye</b> privacy-first retail theft detection</li>
+              <li style="--c:#f59e0b"><b>SiteSmith PM</b> honest websites for small businesses</li>
+              <li style="--c:#34d399"><b>EcoSewa</b> nonprofit reusable-dishware lending</li>
+            </ul>
+            <h2 class="about__h2">About this OS</h2>
+            <p class="about__bio">
+              Built from scratch in plain HTML, CSS, and vanilla JavaScript — no framework, no
+              backend, no login. Draggable windows, a real terminal, a command palette (⌘K),
+              live theming, and this profile are all hand-rolled. Fully public by design.
+            </p>
+            <a class="about__link" href="https://github.com/akshithpaluru-a11y/founderos" target="_blank" rel="noopener">
+              View the source on GitHub →
+            </a>
+          </div>`;
+      },
+    },
   ];
 
   const byId = {};

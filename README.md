@@ -9,6 +9,17 @@ Built for Hack Club **Stardance — "WebOS 1"**.
 
 ---
 
+## Highlights
+
+- **Cinematic boot → lock → desktop.** A lock screen with a live clock and profile — but **no password**. Anyone hits Enter and they're in. Fully public by design.
+- **Command palette (⌘K / Ctrl+K)** — fuzzy-search every app and action, keyboard-driven, just like a real pro tool.
+- **Live theming** — a Settings app to recolor the whole OS (6 accents) and swap the wallpaper (4 options). Saves to your browser and persists across reloads.
+- **Window snapping** — drag a window to a screen edge to snap it to half-screen or maximize, with a live preview.
+- **A real terminal, a live dashboard, an autosaving notepad** — see below.
+- **Right-click the desktop** for a context menu; every window drags, resizes, and stacks.
+
+---
+
 ## The four project-apps
 
 Each desktop icon opens a small product one-pager, styled with its own signature color:
@@ -33,10 +44,18 @@ Open the **Terminal** app for a genuinely working command line, not a decorative
 - `ls` — list installed apps
 - `date` — current date and time
 - `neofetch` — FounderOS system info, with ASCII logo
+- `theme <name>` — **recolor the whole OS from the CLI** (e.g. `theme flux`)
 - `stack`, `contact`, `echo <text>`, `clear`
 - easter eggs: `hustle`, `sudo`, `coffee` (go poke around)
 
 It has **command history** (↑/↓ to cycle previous commands), aliases, and click-to-focus, all in JetBrains Mono to match the rest of the OS.
+
+## More apps
+
+- **Traction** — a founder's-eye dashboard with count-up stats, an animated momentum chart, and per-project progress bars (illustrative sample data — there's no backend).
+- **Idea Pad** — a scratchpad that autosaves to your browser as you type.
+- **Settings** — the appearance switcher (accent + wallpaper), described above.
+- **About Me** — who's behind FounderOS and how it was built.
 
 ## Core WebOS mechanics
 
@@ -64,11 +83,15 @@ Or just open `index.html` directly in a browser.
 
 Plain **HTML + CSS + vanilla JavaScript**. No framework, no bundler, no backend, and **no login or password anywhere** — FounderOS is fully public by design.
 
-- `js/wm.js` — the window manager (drag, resize, focus, min/max/close)
+- `js/os.js` — theming + persisted settings (loads first, no flash)
+- `js/wm.js` — the window manager (drag, resize, focus, min/max/close, edge-snapping)
 - `js/apps.js` — the app registry and one-pager content
 - `js/terminal.js` — the `foundersh` command line
-- `js/main.js` — boot, desktop icons, taskbar, launcher
-- `css/base.css` — the full FounderOS visual identity
+- `js/lock.js` — the no-password lock screen
+- `js/palette.js` — the ⌘K command palette
+- `js/dashboard.js` · `js/notes.js` · `js/settings.js` — the Traction, Idea Pad and Settings apps
+- `js/main.js` — boot → lock → desktop, icons, taskbar, launcher, context menu, shortcuts
+- `css/base.css` · `css/os.css` — the full FounderOS visual identity
 
 ---
 
