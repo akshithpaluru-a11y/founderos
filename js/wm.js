@@ -142,6 +142,7 @@
     el.setAttribute("role", "dialog");
     el.setAttribute("aria-label", opts.title);
     el.dataset.appId = opts.appId;
+    if (opts.accent) el.style.setProperty("--win-accent", opts.accent);
 
     const w = opts.width || 560;
     const h = opts.height || 420;
@@ -169,7 +170,7 @@
 
     const rec = {
       id, appId: opts.appId, el,
-      title: opts.title, badge: opts.badge || "",
+      title: opts.title, badge: opts.badge || "", accent: opts.accent || "",
       x, y, w, h, maximized: false, minimized: false,
     };
     WM.windows.set(id, rec);

@@ -6,21 +6,26 @@
   <title>FounderOS</title>
   <meta name="description" content="FounderOS — a personal WebOS desktop where the apps are the projects I'm building." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
   <link rel="stylesheet" href="css/base.css" />
 </head>
 <body>
   <!-- Boot screen -->
   <div id="boot" class="boot">
     <div class="boot__inner">
+      <div class="boot__mark">▲</div>
       <div class="boot__logo">Founder<span>OS</span></div>
       <div class="boot__bar"><div class="boot__fill"></div></div>
-      <div class="boot__status">booting…</div>
+      <div class="boot__status">loading workspace…</div>
+      <div class="boot__by">the desktop where the apps are the things I'm building</div>
     </div>
   </div>
 
   <!-- Desktop -->
   <main id="desktop" class="desktop" aria-label="FounderOS desktop">
     <div class="desktop__wallpaper"></div>
+    <div class="desktop__brand">FounderOS</div>
     <div id="icons" class="icons" role="list"></div>
     <div id="windows" class="windows"></div>
   </main>

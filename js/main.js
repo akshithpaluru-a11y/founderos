@@ -24,6 +24,8 @@
       btn.className = "icon";
       btn.setAttribute("role", "listitem");
       btn.dataset.appId = app.id;
+      btn.style.setProperty("--app", app.color);
+      btn.style.setProperty("--app-soft", app.colorSoft);
       btn.innerHTML = `
         <span class="icon__tile"><span class="icon__badge">${app.badge}</span></span>
         <span class="icon__label">${app.name}</span>`;
@@ -41,6 +43,7 @@
     WM.list().forEach((rec) => {
       const b = document.createElement("button");
       b.className = "task" + (rec.id === WM.activeId ? " is-active" : "") + (rec.minimized ? " is-min" : "");
+      if (rec.accent) b.style.setProperty("--app", rec.accent);
       b.innerHTML = `<span class="task__dot"></span>${rec.badge ? `<span class="task__badge">${rec.badge}</span>` : ""}<span class="task__label">${rec.title}</span>`;
       b.addEventListener("click", () => WM.toggleMin(rec.id));
       tasks.appendChild(b);
@@ -65,7 +68,8 @@
     Apps.list.forEach((app) => {
       const b = document.createElement("button");
       b.className = "startapp";
-      b.innerHTML = `<span class="startapp__badge">${app.badge}</span><span class="startapp__meta"><b>${app.name}</b><small>${app.tagline}</small></span>`;
+      b.style.setProperty("--app", app.color);
+      b.innerHTML = `<span class="startapp__badge">${app.badge}</span><span class="startapp__meta"><b>${app.name}</b><small>${app.tagline_short}</small></span>`;
       b.addEventListener("click", () => { Apps.launch(app.id); closeStart(); });
       wrap.appendChild(b);
     });
