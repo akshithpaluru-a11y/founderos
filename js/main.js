@@ -7,19 +7,44 @@
   const Apps = window.FounderApps;
 
   // ---------- boot → lock → desktop ----------
+  const BOOT_LOG = [
+    "booting founderos 1.0",
+    "mounting /ventures … 4 found",
+    "starting foundersh … ok",
+    "compositor ready",
+    "welcome back, akshith",
+  ];
   function boot() {
     const bootEl = document.getElementById("boot");
-    setTimeout(() => {
+    const log = document.getElementById("boot-log");
+    const reduce = document.documentElement.hasAttribute("data-reduce-motion");
+    const finish = () => {
       bootEl.classList.add("boot--done");
-      setTimeout(() => {
-        bootEl.style.display = "none";
-        window.FounderLock.show(onUnlocked);
-      }, 450);
-    }, 1500);
+      setTimeout(() => { bootEl.style.display = "none"; window.FounderLock.show(onUnlocked); }, 450);
+    };
+    if (reduce) { setTimeout(finish, 700); return; }
+
+    let li = 0;
+    function typeLine() {
+      if (li >= BOOT_LOG.length) { setTimeout(finish, 320); return; }
+      const line = document.createElement("div");
+      line.className = "boot__line";
+      log.appendChild(line);
+      const text = BOOT_LOG[li];
+      let ci = 0;
+      (function typeChar() {
+        line.textContent = "› " + text.slice(0, ci);
+        ci++;
+        if (ci <= text.length) setTimeout(typeChar, 14);
+        else { li++; setTimeout(typeLine, 150); }
+      })();
+    }
+    setTimeout(typeLine, 350);
   }
   function onUnlocked() {
     // gentle staggered reveal of desktop icons
     document.getElementById("desktop").classList.add("is-live");
+    if (window.FounderSticky) window.FounderSticky.init();
   }
 
   // ---------- desktop icons ----------
@@ -44,13 +69,18 @@
   }
 
   // ---------- taskbar ----------
+  const knownTasks = new Set(); // tracks which chips already animated in
   function renderTasks() {
     const tasks = document.getElementById("tasks");
     tasks.innerHTML = "";
+    const live = new Set(WM.list().map((r) => r.id));
+    knownTasks.forEach((id) => { if (!live.has(id)) knownTasks.delete(id); });
     WM.list().forEach((rec) => {
       const b = document.createElement("button");
       b.className = "task" + (rec.id === WM.activeId ? " is-active" : "") + (rec.minimized ? " is-min" : "");
+      b.dataset.winId = rec.id;
       if (rec.accent) b.style.setProperty("--app", rec.accent);
+      if (!knownTasks.has(rec.id)) { knownTasks.add(rec.id); b.classList.add("task--pop"); }
       b.innerHTML = `<span class="task__dot"></span>${rec.badge ? `<span class="task__badge">${rec.badge}</span>` : ""}<span class="task__label">${rec.title}</span>`;
       b.addEventListener("click", () => WM.toggleMin(rec.id));
       tasks.appendChild(b);
@@ -140,6 +170,19 @@
     setInterval(tick, 10000);
     window.FounderPalette.init();
     window.FounderOS.onChange(() => { /* settings changed live; nothing extra needed */ });
+
+    // subtle wallpaper parallax — makes the desktop feel deep and alive
+    const wp = document.querySelector(".desktop__wallpaper");
+    let px = 0, py = 0, raf = null;
+    window.addEventListener("pointermove", (e) => {
+      if (document.documentElement.hasAttribute("data-reduce-motion")) return;
+      px = (e.clientX / window.innerWidth - 0.5) * -14;
+      py = (e.clientY / window.innerHeight - 0.5) * -14;
+      if (!raf) raf = requestAnimationFrame(() => {
+        wp.style.transform = `scale(1.04) translate(${px}px, ${py}px)`;
+        raf = null;
+      });
+    });
 
     document.getElementById("start").addEventListener("click", (e) => { e.stopPropagation(); toggleStart(); });
     document.getElementById("palette-btn").addEventListener("click", (e) => { e.stopPropagation(); window.FounderPalette.open(); });

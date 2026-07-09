@@ -7,7 +7,7 @@
   <meta name="description" content="FounderOS — a personal WebOS desktop where the apps are the projects I'm building." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Caveat:wght@500;600;700&display=swap" />
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/os.css" />
   <script src="js/os.js"></script>
@@ -19,10 +19,13 @@
       <div class="boot__mark">▲</div>
       <div class="boot__logo">Founder<span>OS</span></div>
       <div class="boot__bar"><div class="boot__fill"></div></div>
-      <div class="boot__status">loading workspace…</div>
+      <div id="boot-log" class="boot__log" aria-hidden="true"></div>
       <div class="boot__by">the desktop where the apps are the things I'm building</div>
     </div>
   </div>
+
+  <!-- Film-grain texture over everything (purely cosmetic) -->
+  <div class="grain" aria-hidden="true"></div>
 
   <!-- Lock screen (no password — press Enter / click to enter) -->
   <div id="lock" class="lock" hidden>
@@ -50,6 +53,10 @@
     <div class="desktop__wallpaper"></div>
     <div class="desktop__brand">FounderOS</div>
     <div id="icons" class="icons" role="list"></div>
+    <div id="sticky" class="sticky" hidden>
+      <div class="sticky__pin"></div>
+      <div class="sticky__body" contenteditable="true" spellcheck="false"></div>
+    </div>
     <div id="windows" class="windows"></div>
   </main>
 
@@ -98,6 +105,7 @@
   <div id="ctxmenu" class="ctxmenu" hidden></div>
 
   <script src="js/wm.js"></script>
+  <script src="js/sticky.js"></script>
   <script src="js/terminal.js"></script>
   <script src="js/dashboard.js"></script>
   <script src="js/notes.js"></script>

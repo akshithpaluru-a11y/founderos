@@ -9,6 +9,10 @@ Built for Hack Club **Stardance — "WebOS 1"**.
 
 ---
 
+## Add your own project in ~30 seconds
+
+All the projects live in one array at the top of [`js/apps.js`](js/apps.js), under a big `WANT TO ADD A PROJECT?` banner. Copy the template block, fill in the fields (id, name, badge, color, tagline, stats, problem, what, points), and save. It automatically becomes a desktop icon, a window, a Start-menu entry, a command-palette result, and an `open <id>` terminal command — no other file needs to change.
+
 ## Highlights
 
 - **Cinematic boot → lock → desktop.** A lock screen with a live clock and profile — but **no password**. Anyone hits Enter and they're in. Fully public by design.
@@ -17,6 +21,7 @@ Built for Hack Club **Stardance — "WebOS 1"**.
 - **Window snapping** — drag a window to a screen edge to snap it to half-screen or maximize, with a live preview.
 - **A real terminal, a live dashboard, an autosaving notepad** — see below.
 - **Right-click the desktop** for a context menu; every window drags, resizes, and stacks.
+- **Hand-crafted details** — a typed boot log, film-grain texture over the whole UI, subtle wallpaper parallax, genie minimize-to-dock, and a **draggable sticky note** in a handwriting font that remembers whatever you scribble on it.
 
 ---
 

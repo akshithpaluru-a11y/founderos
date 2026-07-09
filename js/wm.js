@@ -260,15 +260,33 @@
     }, 150);
   }
 
+  // genie transform: from the window's box toward its taskbar chip
+  function genieTransform(rec) {
+    const chip = document.querySelector('#tasks .task[data-win-id="' + rec.id + '"]');
+    if (!chip) return "translateY(120%) scale(.2)";
+    const cr = chip.getBoundingClientRect();
+    const wr = rec.el.getBoundingClientRect();
+    const dx = (cr.left + cr.width / 2) - (wr.left + wr.width / 2);
+    const dy = (cr.top + cr.height / 2) - (wr.top + wr.height / 2);
+    return `translate(${dx}px, ${dy}px) scale(.06)`;
+  }
+  const reduceMotion = () => document.documentElement.hasAttribute("data-reduce-motion");
+
   function minimize(id) {
     const rec = WM.windows.get(id);
     if (!rec) return;
     rec.minimized = true;
-    rec.el.classList.add("is-minimized");
-    if (WM.activeId === id) {
-      rec.el.classList.remove("is-active");
-      WM.activeId = null;
-    }
+    if (WM.activeId === id) { rec.el.classList.remove("is-active"); WM.activeId = null; }
+    if (reduceMotion()) { rec.el.classList.add("is-minimized"); notify(); return; }
+    const el = rec.el;
+    el.style.transformOrigin = "center";
+    el.style.transition = "transform .3s cubic-bezier(.5,0,.4,1), opacity .3s ease";
+    el.style.transform = genieTransform(rec);
+    el.style.opacity = "0";
+    setTimeout(() => {
+      el.classList.add("is-minimized");
+      el.style.transition = ""; el.style.transform = ""; el.style.opacity = "";
+    }, 300);
     notify();
   }
 
@@ -276,7 +294,18 @@
     const rec = WM.windows.get(id);
     if (!rec) return;
     rec.minimized = false;
-    rec.el.classList.remove("is-minimized");
+    const el = rec.el;
+    if (reduceMotion()) { el.classList.remove("is-minimized"); notify(); return; }
+    // make it visible & measurable first, then start collapsed near the chip
+    el.classList.remove("is-minimized");
+    el.style.transition = "none";
+    el.style.transform = genieTransform(rec);
+    el.style.opacity = "0";
+    void el.offsetWidth; // force reflow to commit the collapsed start state
+    el.style.transition = "transform .3s cubic-bezier(.2,.8,.2,1), opacity .28s ease";
+    el.style.transform = "";
+    el.style.opacity = "";
+    setTimeout(() => { el.style.transition = ""; }, 320);
     notify();
   }
 

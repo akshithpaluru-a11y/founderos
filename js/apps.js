@@ -1,58 +1,47 @@
 /* FounderOS — app registry
- * Each app is a real product one-pager. `color` is the app's signature accent
- * (the OS chrome uses the system orange; each app carries its own brand color).
+ *
+ * ┌─────────────────────────────────────────────────────────────────────────┐
+ * │  WANT TO ADD A PROJECT?  It's one step.                                    │
+ * │  Copy the template block below, paste it into the PROJECTS array, and      │
+ * │  fill in the fields. That's it — it automatically becomes a desktop icon,  │
+ * │  a window, a Start-menu entry, a command-palette result, and an            │
+ * │  `open <id>` terminal command. No other file needs to change.              │
+ * │                                                                            │
+ * │  TEMPLATE — paste this and edit:                                           │
+ * │  {                                                                          │
+ * │    id: "myproject",              // lowercase, no spaces (used in URLs/cli) │
+ * │    name: "My Project",                                                      │
+ * │    badge: "MP",                 // 2 chars shown on the icon tile           │
+ * │    color: "#38bdf8",            // the project's signature color            │
+ * │    category: "Category · Tag",                                             │
+ * │    status: "Prototype",         // small pill, top-right of the window      │
+ * │    tagline: "One punchy line about what it is.",                            │
+ * │    stats: [                      // exactly three                           │
+ * │      { k: "3×", v: "some proof point" },                                    │
+ * │      { k: "0",  v: "another proof point" },                                 │
+ * │      { k: "∞",  v: "a third proof point" },                                 │
+ * │    ],                                                                        │
+ * │    problem: "The pain you're solving, in 1–2 sentences.",                   │
+ * │    what: "How your thing solves it, in 2–3 sentences.",                     │
+ * │    points: [ "key point", "key point", "key point", "key point" ],          │
+ * │  },                                                                          │
+ * └─────────────────────────────────────────────────────────────────────────┘
  */
 (function () {
   "use strict";
 
-  function onePager(a) {
-    const stats = a.stats
-      .map((s) => `<div class="stat"><b>${s.k}</b><span>${s.v}</span></div>`)
-      .join("");
-    const points = a.points.map((p) => `<li>${p}</li>`).join("");
-    return `
-      <article class="op" style="--app:${a.color}; --app-soft:${a.colorSoft};">
-        <header class="op__head">
-          <div class="op__logo">${a.badge}</div>
-          <div class="op__id">
-            <h1 class="op__name">${a.name}</h1>
-            <p class="op__tag">${a.tagline}</p>
-          </div>
-          <span class="op__status">${a.status}</span>
-        </header>
-
-        <div class="op__stats">${stats}</div>
-
-        <section class="op__block">
-          <h2>The problem</h2>
-          <p>${a.problem}</p>
-        </section>
-
-        <section class="op__block">
-          <h2>What it does</h2>
-          <p>${a.what}</p>
-        </section>
-
-        <ul class="op__points">${points}</ul>
-
-        <footer class="op__foot">
-          <span class="op__chip">${a.category}</span>
-          <span class="op__by">a project by Akshith Paluru</span>
-        </footer>
-      </article>`;
-  }
-
-  const APPS = [
+  // ═══════════════════════════════════════════════════════════════════════
+  //  YOUR PROJECTS  — add / edit / reorder freely
+  // ═══════════════════════════════════════════════════════════════════════
+  const PROJECTS = [
     {
       id: "driplyft",
       name: "DripLyft",
       badge: "DL",
       color: "#38bdf8",
-      colorSoft: "rgba(56,189,248,0.14)",
       category: "Robotics · Proptech",
-      tagline: "Autonomous drones that clean high-rise glass — no rope, no rig, no one at height.",
       status: "Prototype",
-      width: 620, height: 560,
+      tagline: "Autonomous drones that clean high-rise glass — no rope, no rig, no one at height.",
       stats: [
         { k: "3×", v: "faster than rope-access crews" },
         { k: "0", v: "people working at height" },
@@ -68,18 +57,15 @@
         "Ground-station docking, charging, and self-scheduling",
         "Targeting mid-rise offices first, then taller towers",
       ],
-      tagline_short: "Autonomous drone window cleaning",
     },
     {
       id: "shieldeye",
       name: "ShieldEye",
       badge: "SE",
       color: "#a78bfa",
-      colorSoft: "rgba(167,139,250,0.14)",
       category: "Applied AI · Retail",
-      tagline: "Real-time shrink detection that flags theft as it happens — not in the after-report.",
       status: "In training",
-      width: 620, height: 560,
+      tagline: "Real-time shrink detection that flags theft as it happens — not in the after-report.",
       stats: [
         { k: "<2s", v: "from behavior to staff alert" },
         { k: "0", v: "facial recognition, ever" },
@@ -95,18 +81,15 @@
         "Live alerts to staff phones or the back office",
         "Edge inference keeps footage private and latency low",
       ],
-      tagline_short: "AI retail theft detection",
     },
     {
       id: "sitesmith",
       name: "SiteSmith PM",
       badge: "SS",
       color: "#f59e0b",
-      colorSoft: "rgba(245,158,11,0.15)",
       category: "Studio · Services",
-      tagline: "Fast, honest websites for small businesses that got quoted $8k and then ghosted.",
       status: "Taking clients",
-      width: 620, height: 560,
+      tagline: "Fast, honest websites for small businesses that got quoted $8k and then ghosted.",
       stats: [
         { k: "Days", v: "to live, not months" },
         { k: "Flat", v: "pricing with no surprises" },
@@ -122,18 +105,15 @@
         "Ongoing small edits are part of the deal",
         "Local-first: real support from a real person",
       ],
-      tagline_short: "Web design for small businesses",
     },
     {
       id: "ecosewa",
       name: "EcoSewa",
       badge: "ES",
       color: "#34d399",
-      colorSoft: "rgba(52,211,153,0.14)",
       category: "Nonprofit · Sustainability",
-      tagline: "A reusable-dishware library for community events — borrow, wash, return, skip the landfill.",
       status: "Piloting",
-      width: 620, height: 560,
+      tagline: "A reusable-dishware library for community events — borrow, wash, return, skip the landfill.",
       stats: [
         { k: "0", v: "single-use plates per event" },
         { k: "Deposit", v: "backed, so nothing walks off" },
@@ -149,76 +129,95 @@
         "Wash-and-return logistics handled by volunteers",
         "Tracks waste diverted per event to show real impact",
       ],
-      tagline_short: "Reusable dishware lending",
     },
+  ];
+  // ═══════════════════════════════════════════════════════════════════════
+
+  // hex -> soft rgba for glows/tints (auto-derived so projects only set `color`)
+  function soft(hex, a) {
+    const n = parseInt(hex.slice(1), 16);
+    return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
+  }
+
+  function onePager(a) {
+    const stats = a.stats.map((s) => `<div class="stat"><b>${s.k}</b><span>${s.v}</span></div>`).join("");
+    const points = a.points.map((p) => `<li>${p}</li>`).join("");
+    return `
+      <article class="op" style="--app:${a.color}; --app-soft:${a.colorSoft};">
+        <header class="op__head">
+          <div class="op__logo">${a.badge}</div>
+          <div class="op__id">
+            <h1 class="op__name">${a.name}</h1>
+            <p class="op__tag">${a.tagline}</p>
+          </div>
+          <span class="op__status">${a.status}</span>
+        </header>
+        <div class="op__stats">${stats}</div>
+        <section class="op__block"><h2>The problem</h2><p>${a.problem}</p></section>
+        <section class="op__block"><h2>What it does</h2><p>${a.what}</p></section>
+        <ul class="op__points">${points}</ul>
+        <footer class="op__foot">
+          <span class="op__chip">${a.category}</span>
+          <span class="op__by">a project by Akshith Paluru</span>
+        </footer>
+      </article>`;
+  }
+
+  // normalise each project into a full app record
+  const PROJECT_APPS = PROJECTS.map((p) => {
+    const a = {
+      ...p,
+      colorSoft: p.colorSoft || soft(p.color, 0.14),
+      tagline_short: p.tagline_short || p.category,
+      width: p.width || 620,
+      height: p.height || 560,
+    };
+    a.render = (body) => { body.innerHTML = onePager(a); };
+    return a;
+  });
+
+  // ═══════════════════════════════════════════════════════════════════════
+  //  SYSTEM APPS  — the OS's own tools (terminal, dashboard, notes, etc.)
+  // ═══════════════════════════════════════════════════════════════════════
+  const SYSTEM_APPS = [
     {
-      id: "terminal",
-      name: "Terminal",
-      badge: ">_",
-      color: "#ff7a45",
-      colorSoft: "rgba(255,122,69,0.16)",
-      category: "System",
-      tagline: "foundersh — a real command line for FounderOS.",
-      tagline_short: "foundersh — the real CLI",
-      status: "System",
-      width: 640, height: 440,
-      custom: true,
+      id: "terminal", name: "Terminal", badge: ">_",
+      color: "#ff7a45", colorSoft: "rgba(255,122,69,0.16)",
+      category: "System", tagline: "foundersh — a real command line for FounderOS.",
+      tagline_short: "foundersh — the real CLI", status: "System",
+      width: 640, height: 440, custom: true,
       render(body) { window.FounderTerminal.mount(body); },
     },
     {
-      id: "traction",
-      name: "Traction",
-      badge: "▤",
-      color: "#f5a524",
-      colorSoft: "rgba(245,165,36,0.15)",
-      category: "Dashboard",
-      tagline: "A founder's-eye view of the build.",
-      tagline_short: "animated build metrics",
-      status: "Live",
-      width: 640, height: 620,
-      custom: true,
+      id: "traction", name: "Traction", badge: "▤",
+      color: "#f5a524", colorSoft: "rgba(245,165,36,0.15)",
+      category: "Dashboard", tagline: "A founder's-eye view of the build.",
+      tagline_short: "animated build metrics", status: "Live",
+      width: 640, height: 620, custom: true,
       render(body, rec) { window.FounderDashboard.mount(body, rec); },
     },
     {
-      id: "notes",
-      name: "Idea Pad",
-      badge: "✎",
-      color: "#fcd34d",
-      colorSoft: "rgba(252,211,77,0.14)",
-      category: "Utility",
-      tagline: "Quick-capture notes that autosave.",
-      tagline_short: "autosaving scratchpad",
-      status: "Utility",
-      width: 520, height: 460,
-      custom: true, desktop: false,
+      id: "notes", name: "Idea Pad", badge: "✎",
+      color: "#fcd34d", colorSoft: "rgba(252,211,77,0.14)",
+      category: "Utility", tagline: "Quick-capture notes that autosave.",
+      tagline_short: "autosaving scratchpad", status: "Utility",
+      width: 520, height: 460, custom: true, desktop: false,
       render(body) { window.FounderNotes.mount(body); },
     },
     {
-      id: "settings",
-      name: "Settings",
-      badge: "◐",
-      color: "#94a3b8",
-      colorSoft: "rgba(148,163,184,0.16)",
-      category: "System",
-      tagline: "Recolor the OS and swap the wallpaper.",
-      tagline_short: "accent + wallpaper",
-      status: "System",
-      width: 560, height: 560,
-      custom: true, desktop: false,
+      id: "settings", name: "Settings", badge: "◐",
+      color: "#94a3b8", colorSoft: "rgba(148,163,184,0.16)",
+      category: "System", tagline: "Recolor the OS and swap the wallpaper.",
+      tagline_short: "accent + wallpaper", status: "System",
+      width: 560, height: 560, custom: true, desktop: false,
       render(body) { window.FounderSettings.mount(body); },
     },
     {
-      id: "about",
-      name: "About Me",
-      badge: "AP",
-      color: "#ff7a45",
-      colorSoft: "rgba(255,122,69,0.16)",
-      category: "Profile",
-      tagline: "Who's behind FounderOS.",
-      tagline_short: "the founder behind it",
-      status: "Profile",
-      width: 560, height: 560,
-      custom: true, desktop: false,
+      id: "about", name: "About Me", badge: "AP",
+      color: "#ff7a45", colorSoft: "rgba(255,122,69,0.16)",
+      category: "Profile", tagline: "Who's behind FounderOS.",
+      tagline_short: "the founder behind it", status: "Profile",
+      width: 560, height: 560, custom: true, desktop: false,
       render(body) {
         body.innerHTML = `
           <div class="about">
@@ -255,11 +254,10 @@
     },
   ];
 
+  const APPS = PROJECT_APPS.concat(SYSTEM_APPS);
+
   const byId = {};
-  APPS.forEach((a) => {
-    if (!a.custom) a.render = (body) => { body.innerHTML = onePager(a); };
-    byId[a.id] = a;
-  });
+  APPS.forEach((a) => { byId[a.id] = a; });
 
   function launch(id) {
     const app = byId[id];
@@ -275,5 +273,5 @@
     });
   }
 
-  window.FounderApps = { list: APPS, byId, launch };
+  window.FounderApps = { list: APPS, projects: PROJECT_APPS, byId, launch };
 })();
