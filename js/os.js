@@ -22,7 +22,7 @@
     { id: "nebula", name: "Nebula" },
   ];
 
-  const DEFAULTS = { accent: "ember", wallpaper: "ember", reduceMotion: false };
+  const DEFAULTS = { accent: "ember", wallpaper: "ember", reduceMotion: false, userName: "" };
 
   function load() {
     try { return Object.assign({}, DEFAULTS, JSON.parse(localStorage.getItem(KEY) || "{}")); }
@@ -69,6 +69,14 @@
     setReduceMotion(v) { state.reduceMotion = !!v; document.documentElement.toggleAttribute("data-reduce-motion", !!v); persist(); emit(); },
     onChange(fn) { listeners.add(fn); return () => listeners.delete(fn); },
     accentName: () => (ACCENTS.find((x) => x.id === state.accent) || ACCENTS[0]).name,
+    setUser(name) { state.userName = (name || "").trim().slice(0, 24); persist(); emit(); },
+    userName: () => state.userName,
+    firstName: () => (state.userName ? state.userName.split(/\s+/)[0] : "Akshith"),
+    initials: () => {
+      const n = state.userName || "Akshith Paluru";
+      const parts = n.split(/\s+/).filter(Boolean);
+      return ((parts[0] || "A")[0] + (parts[1] ? parts[1][0] : "")).toUpperCase();
+    },
     apply: applyAll,
   };
 

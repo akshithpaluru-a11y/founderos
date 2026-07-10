@@ -41,10 +41,27 @@
     }
     setTimeout(typeLine, 350);
   }
+  // ---------- toasts ----------
+  function toast(msg, opts) {
+    opts = opts || {};
+    const wrap = document.getElementById("toasts");
+    const t = document.createElement("div");
+    t.className = "toast";
+    if (opts.accent) t.style.setProperty("--app", opts.accent);
+    t.innerHTML = `${opts.badge ? `<span class="toast__badge">${opts.badge}</span>` : ""}<span class="toast__msg">${msg}</span>`;
+    wrap.appendChild(t);
+    requestAnimationFrame(() => t.classList.add("is-in"));
+    setTimeout(() => { t.classList.remove("is-in"); setTimeout(() => t.remove(), 300); }, opts.ms || 3200);
+  }
+
   function onUnlocked() {
     // gentle staggered reveal of desktop icons
     document.getElementById("desktop").classList.add("is-live");
     if (window.FounderSticky) window.FounderSticky.init();
+    const name = window.FounderOS.firstName();
+    setTimeout(() => toast(`Welcome to FounderOS, ${name} 👋`, { badge: "▲" }), 700);
+    // let Foundy say hi shortly after
+    setTimeout(() => { if (window.FounderAssistant) window.FounderAssistant.greet(); }, 1600);
   }
 
   // ---------- desktop icons ----------
@@ -169,6 +186,7 @@
     tick();
     setInterval(tick, 10000);
     window.FounderPalette.init();
+    if (window.FounderFX) window.FounderFX.init();
     window.FounderOS.onChange(() => { /* settings changed live; nothing extra needed */ });
 
     // subtle wallpaper parallax — makes the desktop feel deep and alive
@@ -206,6 +224,6 @@
     });
   }
 
-  window.FounderMain = { relock };
+  window.FounderMain = { relock, toast };
   document.addEventListener("DOMContentLoaded", init);
 })();

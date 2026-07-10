@@ -40,10 +40,10 @@
       <div class="lock__name">Akshith Paluru</div>
       <div class="lock__role">founder · builder</div>
       <form id="lock-form" class="lock__form" autocomplete="off">
-        <input id="lock-input" class="lock__input" type="text" placeholder="Press Enter to open FounderOS" aria-label="Unlock FounderOS" />
+        <input id="lock-input" class="lock__input" type="text" placeholder="Type your name (optional) — then hit Enter" aria-label="Unlock FounderOS" maxlength="24" />
         <button type="submit" class="lock__go" aria-label="Enter">→</button>
       </form>
-      <div class="lock__hint">No password — FounderOS is fully public. Just hit Enter.</div>
+      <div class="lock__hint">No password — FounderOS is fully public. Enter your name to personalize it, or just hit Enter.</div>
     </div>
     <div class="lock__foot">FounderOS 1.0</div>
   </div>
@@ -51,6 +51,7 @@
   <!-- Desktop -->
   <main id="desktop" class="desktop" aria-label="FounderOS desktop">
     <div class="desktop__wallpaper"></div>
+    <canvas id="fx" class="fx" aria-hidden="true"></canvas>
     <div class="desktop__brand">FounderOS</div>
     <div id="icons" class="icons" role="list"></div>
     <div id="sticky" class="sticky" hidden>
@@ -104,8 +105,14 @@
   <!-- Desktop context menu -->
   <div id="ctxmenu" class="ctxmenu" hidden></div>
 
+  <!-- Toast notifications -->
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
   <script src="js/wm.js"></script>
+  <script src="js/particles.js"></script>
   <script src="js/sticky.js"></script>
+  <script src="js/assistant.js"></script>
+  <script src="js/games.js"></script>
   <script src="js/terminal.js"></script>
   <script src="js/dashboard.js"></script>
   <script src="js/notes.js"></script>

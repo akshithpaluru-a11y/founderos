@@ -19,6 +19,9 @@
   function unlock() {
     const lock = document.getElementById("lock");
     if (!lock || lock.classList.contains("lock--out")) return;
+    // capture a name if typed — personalizes the session (still no password)
+    const input = document.getElementById("lock-input");
+    if (input && input.value.trim() && window.FounderOS) window.FounderOS.setUser(input.value.trim());
     lock.classList.add("lock--out");
     if (clockTimer) clearInterval(clockTimer);
     setTimeout(() => {
@@ -32,6 +35,16 @@
     onUnlockCb = cb;
     const lock = document.getElementById("lock");
     lock.hidden = false;
+    // reflect the saved user (avatar initials + name) if they've been here before
+    if (window.FounderOS) {
+      const name = window.FounderOS.userName();
+      if (name) {
+        lock.querySelector(".lock__avatar").textContent = window.FounderOS.initials();
+        lock.querySelector(".lock__name").textContent = name;
+        const input = document.getElementById("lock-input");
+        if (input) input.placeholder = "Press Enter to open FounderOS";
+      }
+    }
     updateClock();
     clockTimer = setInterval(updateClock, 5000);
 
