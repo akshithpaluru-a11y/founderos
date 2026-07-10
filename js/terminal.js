@@ -23,6 +23,8 @@
     notes: "notes", ideapad: "notes", pad: "notes",
     settings: "settings", appearance: "settings", theme: "settings",
     about: "about", me: "about", profile: "about",
+    foundy: "foundy", assistant: "foundy", ai: "foundy",
+    arcade: "arcade", game: "arcade", games: "arcade", rounds: "arcade", play: "arcade",
   };
 
   function esc(s) {

@@ -181,6 +181,22 @@
   // ═══════════════════════════════════════════════════════════════════════
   const SYSTEM_APPS = [
     {
+      id: "foundy", name: "Foundy", badge: "✦",
+      color: "#ff7a45", colorSoft: "rgba(255,122,69,0.16)",
+      category: "Assistant", tagline: "Your in-OS AI copilot.",
+      tagline_short: "the OS assistant", status: "Online",
+      width: 480, height: 560, custom: true,
+      render(body) { window.FounderAssistant.mount(body); },
+    },
+    {
+      id: "arcade", name: "Arcade", badge: "◈",
+      color: "#f472b6", colorSoft: "rgba(244,114,182,0.15)",
+      category: "Game", tagline: "ROUNDS — merge funding rounds all the way to IPO.",
+      tagline_short: "ROUNDS: 2048, but startups", status: "Play",
+      width: 460, height: 620, custom: true,
+      render(body) { window.FounderArcade.mount(body); },
+    },
+    {
       id: "terminal", name: "Terminal", badge: ">_",
       color: "#ff7a45", colorSoft: "rgba(255,122,69,0.16)",
       category: "System", tagline: "foundersh — a real command line for FounderOS.",
@@ -244,7 +260,8 @@
             <p class="about__bio">
               Built from scratch in plain HTML, CSS, and vanilla JavaScript — no framework, no
               backend, no login. Draggable windows, a real terminal, a command palette (⌘K),
-              live theming, and this profile are all hand-rolled. Fully public by design.
+              live theming, an on-device assistant (Foundy), and even a game (ROUNDS) are all
+              hand-rolled. Fully public by design.
             </p>
             <a class="about__link" href="https://github.com/akshithpaluru-a11y/founderos" target="_blank" rel="noopener">
               View the source on GitHub →

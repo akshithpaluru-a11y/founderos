@@ -15,7 +15,10 @@ All the projects live in one array at the top of [`js/apps.js`](js/apps.js), und
 
 ## Highlights
 
-- **Cinematic boot → lock → desktop.** A lock screen with a live clock and profile — but **no password**. Anyone hits Enter and they're in. Fully public by design.
+- **Foundy — an in-OS AI assistant that actually controls the desktop.** Ask it in plain English to open apps, recolor the whole OS, switch wallpaper, start a game, or brief you on any project — and it does it. It's a fully client-side, rule-based brain (no server, no API keys) so the OS stays 100% public.
+- **A real game — ROUNDS.** A 2048-style puzzle themed as funding rounds: merge Idea → Seed → Series A → … all the way to **IPO**. Keyboard or swipe, with a persistent best score.
+- **Cinematic boot → lock → desktop.** A typed boot log, then a lock screen with a live clock and profile — but **no password**. Type your name to personalize the whole session (avatar, greeting, Foundy), or just hit Enter. Fully public by design.
+- **Ambient motion** — drifting accent-colored particles behind the desktop, plus film grain and wallpaper parallax.
 - **Command palette (⌘K / Ctrl+K)** — fuzzy-search every app and action, keyboard-driven, just like a real pro tool.
 - **Live theming** — a Settings app to recolor the whole OS (6 accents) and swap the wallpaper (4 options). Saves to your browser and persists across reloads.
 - **Window snapping** — drag a window to a screen edge to snap it to half-screen or maximize, with a live preview.
@@ -57,6 +60,8 @@ It has **command history** (↑/↓ to cycle previous commands), aliases, and cl
 
 ## More apps
 
+- **Foundy** — the AI copilot (above). Type-to-chat with a thinking indicator; it drives the OS for you.
+- **Arcade → ROUNDS** — the funding-round merge game (above).
 - **Traction** — a founder's-eye dashboard with count-up stats, an animated momentum chart, and per-project progress bars (illustrative sample data — there's no backend).
 - **Idea Pad** — a scratchpad that autosaves to your browser as you type.
 - **Settings** — the appearance switcher (accent + wallpaper), described above.
